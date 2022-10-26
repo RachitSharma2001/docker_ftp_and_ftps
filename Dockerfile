@@ -3,7 +3,6 @@ FROM ubuntu:latest
 ENV USER=user \
     PASS=123 \
     HOME_DIR=/home/user
-COPY test.py .
 RUN apt-get update && apt-get install -y vsftpd
 COPY src/entrypoint.sh .
 RUN ["chmod", "+x", "./entrypoint.sh"]
