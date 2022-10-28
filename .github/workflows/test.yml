@@ -25,11 +25,11 @@ jobs:
       - name: Update pip
         run: python -m pip install -U pip
 
-      - name: run shell script
-        run: ./src/entrypoint.sh
+      - name: Run shell script
+        run: sudo ./src/entrypoint.sh
 
-      - name: run FTP Test
+      - name: Test FTP
         run: python ./tests/test_ftp.py
 
-      - name: run FTPS Test
+      - name: Test FTPS
         run: python ./tests/test_ftps.py

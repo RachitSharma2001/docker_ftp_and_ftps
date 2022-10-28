@@ -3,7 +3,7 @@ from ftplib import FTP
 ftp = FTP()
 ftp.debugging = 2
 ftp.connect('localhost', 81)
-ftp.login('rachit', '567')
+ftp.login('user', '123')
 print("Done!")
 
 print(ftp.pwd())

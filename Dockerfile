@@ -2,7 +2,8 @@ FROM ubuntu:latest
 
 ENV USER=user \
     PASS=123 \
-    HOME_DIR=/home/user
+    HOME_DIR=/home/user \
+    IS_TRUE_RUN=1
 RUN apt-get update && apt-get install -y vsftpd
 COPY src/entrypoint.sh .
 RUN ["chmod", "+x", "./entrypoint.sh"]
