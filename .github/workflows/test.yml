@@ -1,0 +1,35 @@
+name: Test
+
+on:
+  pull_request:
+    branches:
+    - main
+  push:
+    branches:
+    - main
+
+jobs:
+  end-to-end-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Install vsftpd
+        run: apt-get update && apt-get install -y vsftpd
+      
+      - name: Setup up Python 3.10
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+      
+      - name: Update pip
+        run: python -m pip install -U pip
+
+      - name: run shell script
+        run: ./src/entrypoint.sh
+
+      - name: run FTP Test
+        run: python ./tests/test_ftp.py
+
+      - name: run FTPS Test
+        run: python ./tests/test_ftps.py
