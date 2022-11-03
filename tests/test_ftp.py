@@ -7,7 +7,7 @@ content = "something else something else \n something\n"
 @pytest.fixture
 def ftp():
     ftp = FTP()
-    ftp.connect('localhost', 81)
+    ftp.connect('localhost', 21)
     ftp.login('user', '123')
     return ftp
 
