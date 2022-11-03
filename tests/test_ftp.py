@@ -15,4 +15,4 @@ def test_ftp_read_write(ftp):
     ftp.storlines("STOR ftp_file", io.BytesIO(content.encode()))
     read_socket = ftp.transfercmd("RETR ftp_file")
     fobj = read_socket.makefile('r')
-    assert fobj.read() == content 
+    assert fobj.read() == content   
