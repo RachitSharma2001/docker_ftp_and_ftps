@@ -1,14 +1,20 @@
 from ftplib import FTP_TLS
 import pytest 
 import io
+import os
 
 content = "something else something else \n something\n"
+
+USER = os.environ.get('USER')
+PASS = os.environ.get('PASS')
+HOST = os.environ.get('HOST')
+PORT = int(os.environ.get('FTPS_PORT'))
 
 @pytest.fixture
 def ftps():
     ftps = FTP_TLS()
-    ftps.connect('localhost', 81)
-    ftps.login('user', '123')
+    ftps.connect(HOST, PORT)
+    ftps.login(USER, PASS)
     ftps.prot_p()
     return ftps
 

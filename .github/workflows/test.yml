@@ -1,10 +1,16 @@
 name: Test
 
-on: [push, pull-request]
+on: [push, pull_request]
 
 jobs:
   end-to-end-test:
     runs-on: ubuntu-latest
+    env:
+      USER: user
+      PASS: 123
+      HOST: localhost
+      FTP_PORT: 21
+      FTPS_PORT: 81
     steps:
       - uses: actions/checkout@v2
       
