@@ -8,6 +8,7 @@ jobs:
     env:
       USER: user
       PASS: 123
+      HOME_DIR: /home/user
       HOST: localhost
       FTP_PORT: 21
       FTPS_PORT: 81
@@ -28,7 +29,7 @@ jobs:
       - run: pip install -U pytest
 
       - name: Run shell script
-        run: sudo ./src/entrypoint.sh
+        run: sudo USER=$USER PASS=$PASS HOME_DIR=$HOME_DIR FTP_PORT=$FTP_PORT FTPS_PORT=$FTPS_PORT ./src/entrypoint.sh
 
       - name: Test FTP
         run: pytest ./tests/test_ftp.py

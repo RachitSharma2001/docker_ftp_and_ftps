@@ -2,15 +2,6 @@
 
 echo "Setting up the user ..."
 
-if [ -z $IS_TRUE_RUN ]
-then
-    export USER=user
-    export PASS=123
-    export HOME_DIR=/home/user
-    export FTP_PORT=21
-    export FTPS_PORT=81
-fi
-
 mkdir $HOME_DIR
 useradd -p $(echo $PASS | openssl passwd -1 -stdin) -d $HOME_DIR $USER
 chown $USER:$USER $HOME_DIR
