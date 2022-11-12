@@ -6,7 +6,7 @@ on:
     - main
 
 jobs:
-  push_to_docker_hub:
+  push-to-docker-hub:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
