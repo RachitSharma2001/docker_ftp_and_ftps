@@ -8,28 +8,31 @@ chown $USER:$USER $HOME_DIR
 
 echo "Setting up the FTP and FTPS servers ..."
 
-echo "listen=YES" >> /etc/vsftpd.conf
-echo "listen_ipv6=NO" >> /etc/vsftpd.conf
-echo "write_enable=YES" >> /etc/vsftpd.conf
-echo "pasv_enable=YES" >> /etc/vsftpd.conf
-echo "pasv_min_port=40000" >> /etc/vsftpd.conf
-echo "pasv_max_port=40009" >> /etc/vsftpd.conf
-echo "chroot_local_user=YES" >> /etc/vsftpd.conf
-echo "allow_writeable_chroot=YES" >> /etc/vsftpd.conf
+server_setup='''
+listen=YES
+listen_ipv6=NO
+write_enable=YES
+pasv_enable=YES
+pasv_min_port=40000
+pasv_max_port=40009
+chroot_local_user=YES
+allow_writeable_chroot=YES'''
 
-cp /etc/vsftpd.conf /etc/vsftpd-ssl.conf
+additional_ssl_setup='''
+ssl_enable=YES
+allow_anon_ssl=NO
+force_local_data_ssl=NO
+force_local_logins_ssl=NO
+require_ssl_reuse=NO
+'''
 
-echo "listen_port=${FTP_PORT}" >> /etc/vsftpd.conf
-echo "listen_port=${FTPS_PORT}" >> /etc/vsftpd-ssl.conf
-
-echo "ssl_enable=YES" >> /etc/vsftpd-ssl.conf
-echo "allow_anon_ssl=NO" >> /etc/vsftpd-ssl.conf
-echo "force_local_data_ssl=NO" >> /etc/vsftpd-ssl.conf
-echo "force_local_logins_ssl=NO" >> /etc/vsftpd-ssl.conf
-echo "require_ssl_reuse=NO" >> /etc/vsftpd-ssl.conf
+sudo cp /etc/vsftpd.conf /etc/vsftpd-ssl.conf
+echo -e "$server_setup\nlisten_port=${FTP_PORT}" | sudo tee -a /etc/vsftpd.conf
+echo -e "$server_setup\nlisten_port=${FTPS_PORT}\n$additional_ssl_setup" | sudo tee -a /etc/vsftpd-ssl.conf
 
 service vsftpd restart
 vsftpd /etc/vsftpd-ssl.conf &
+
 echo "Servers set up successfully!"
 
 if [ $IS_TRUE_RUN -eq 1 ]
